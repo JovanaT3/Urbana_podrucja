@@ -1,0 +1,198 @@
+---
+output:
+  html_document:
+    fig_width: 9.5
+    theme: united
+---
+
+<!-- ucitavanje biblioteka -->
+
+```{r echo=FALSE, warning=FALSE, message=FALSE,include = FALSE}
+library(sp) 
+library(rgdal) 
+library(leafpop)
+library(mapview)
+```
+
+<!-- unos shp fajla -->
+
+```{r echo=FALSE, warning=FALSE, message=FALSE,include = FALSE}
+shp = readOGR(dsn="C:\\MASTER RAD\\FINALNO\\R\\GIT\\Urbana_podrucja\\PODACI",layer="STATISTIKA")
+```
+
+<!-- kreiranje mapa urbanih povrsina -->
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+mapU2012 <- mapview(shp, zcol = "X._U2012", label = "NameASCII",
+                   map.types = c('CartoDB.Positron','Esri.WorldImagery','OpenStreetMap'),
+                   col.regions = RColorBrewer::brewer.pal(9, "Reds"), alpha.regions = 1,
+                   layer.name = "Urbano područje 2012",
+                   popup = popupTable(
+                    shp, row.numbers = FALSE, feature.id = FALSE,
+                    zcol = c(
+                      "NameASCII",
+                      "P_OPSTINE",
+                      "P_U2012",
+                      "X._U2012"
+                      )
+                    )
+                  )
+
+mapU2015 <- mapview(shp, zcol = "X._U2015", label = "NameASCII",
+                   map.types = c('CartoDB.Positron','Esri.WorldImagery','OpenStreetMap'),
+                   col.regions = RColorBrewer::brewer.pal(9, "Reds"), alpha.regions = 1,
+                   layer.name = "Urbano područje 2015",
+                   popup = popupTable(
+                    shp, row.numbers = FALSE, feature.id = FALSE,
+                    zcol = c(
+                      "NameASCII",
+                      "P_OPSTINE",
+                      "P_U2015",
+                      "X._U2015"
+                      )
+                    )
+                  )
+
+mapU2018 <- mapview(shp, zcol = "X._U2018", label = "NameASCII",
+                   map.types = c('CartoDB.Positron','Esri.WorldImagery','OpenStreetMap'),
+                   col.regions = RColorBrewer::brewer.pal(9, "Reds"), alpha.regions = 1,
+                   layer.name = "Urbano područje 2018",
+                   popup = popupTable(
+                    shp, row.numbers = FALSE, feature.id = FALSE,
+                    zcol = c(
+                      "NameASCII",
+                      "P_OPSTINE",
+                      "P_U2018",
+                      "X._U2018"
+                      )
+                    )
+                  )
+```
+
+<!-- PRVI DIO -->
+
+## [*Karte urbanih površina opština u Srbiji za godine 2012, 2015 i 2018*]{.underline}
+
+<p style="text-align:justify">Karte urbanih površina opština u Srbiji dobijene su na osnovu podataka [Kopernikus monitoring servisa](https://land.copernicus.eu/en/map-viewer). Dobijene karte predstavljaju procentualni odnos površina urbanog područja i površine opština.</p>
+
+\n
+
+### Izaberi kartu urbanog područja:{.tabset}
+
+#### Urbano područje za 2012-u
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+mapU2012
+```
+
+\n
+
+#### Urbano područje za 2015-u
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+mapU2015
+```
+
+\n
+
+#### Urbano područje za 2018-u
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+mapU2018
+```
+
+\n
+
+<!-- kreiranje mapa promena -->
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+mapPR_U_12_15 <- mapview(shp, zcol = "PR_U_12_15", label = "NameASCII",
+                   map.types = c('CartoDB.Positron','Esri.WorldImagery','OpenStreetMap'),
+                   col.regions = RColorBrewer::brewer.pal(9, "YlOrRd"), alpha.regions = 1,
+                   layer.name = "Promena 2012/2015",
+                   popup = popupTable(
+                    shp, row.numbers = FALSE, feature.id = FALSE,
+                    zcol = c(
+                      "NameASCII",
+                      "P_OPSTINE",
+                      "P_U2012",
+                      "X._U2012",
+                      "P_U2015",
+                      "X._U2015",
+                      "PR_U_12_15"
+                      )
+                    )
+                  )
+
+mapPR_U_15_18 <- mapview(shp, zcol = "PR_U_15_18", label = "NameASCII",
+                   map.types = c('CartoDB.Positron','Esri.WorldImagery','OpenStreetMap'),
+                   col.regions = RColorBrewer::brewer.pal(9, "YlOrRd"), alpha.regions = 1,
+                   layer.name = "Promena 2015/2018",
+                   popup = popupTable(
+                    shp, row.numbers = FALSE, feature.id = FALSE,
+                    zcol = c(
+                      "NameASCII",
+                      "P_OPSTINE",
+                      "P_U2015",
+                      "X._U2015",
+                      "P_U2018",
+                      "X._U2018",
+                      "PR_U_15_18"
+                      )
+                    )
+                  )
+
+mapPR_U_12_18 <- mapview(shp, zcol = "PR_U_12_18", label = "NameASCII",
+                   map.types = c('CartoDB.Positron','Esri.WorldImagery','OpenStreetMap'),
+                   col.regions = RColorBrewer::brewer.pal(9, "YlOrRd"), alpha.regions = 1,
+                   layer.name = "Promena 2012/2018",
+                   popup = popupTable(
+                    shp, row.numbers = FALSE, feature.id = FALSE,
+                    zcol = c(
+                      "NameASCII",
+                      "P_OPSTINE",
+                      "P_U2012",
+                      "X._U2012",
+                      "P_U2018",
+                      "X._U2018",
+                      "PR_U_12_18"
+                      )
+                    )
+                  )
+
+```
+
+\n
+
+\
+<!-- DRUGI DIO -->
+
+# [*Karte promena urbanih površina opština u Srbiji*]{.underline}
+
+<p style="text-align:justify">Karte promena predstavljaju koliko puta se promenilo urbano područje po opštini u zavisnosti od datih godina, odnosno koliko puta se površina urbanog područja jedne opštine povećala (vrednosti\>1) ili smanjila (vrednosti\<1) za određeni period.</p>
+
+\n
+
+### Izaberi kartu promene:{.tabset}
+
+#### Karta promena 2012/2015
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+mapPR_U_12_15
+```
+
+\n
+
+#### Karta promena 2015/2018
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+mapPR_U_15_18 
+```
+
+\n
+
+#### Karta promena 2012/2018
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+mapPR_U_12_18
+```
